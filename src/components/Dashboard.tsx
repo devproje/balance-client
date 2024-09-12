@@ -75,35 +75,40 @@ export function Dashboard({ url, token }: { url: string | null, token: string | 
 	
 	return (
 		<main className="">
-			<div className="view">
-				<button onClick={ev => {
+			<nav>test</nav>
+			<button onClick={ev => {
+				ev.preventDefault();
+				logout();
+			}}>Logout</button>
+			<div className="bal_view">
+				<form className="bal_add" onSubmit={ev => {
 					ev.preventDefault();
-					logout();
-				}}>Logout</button>
-				<form>
-					<div>
-						<span>Name</span>
-						<input name="name" type="text" required />
+				}}>
+					<div className="input_box">
+						<div className="input_row heap_box">
+							<span>Name</span>
+							<input name="name" type="text" required />
+							<span>Date</span>
+							<input name="date" type="date" />
+							<span>Price</span>
+							<input name="price" type="number" />
+						</div>
 					</div>
-					<div>
-						<span>Date</span>
-						<input name="date" type="date" />
-					</div>
-					<div>
-						<span>Price</span>
-						<input name="price" type="number" />
-					</div>
-					<div>
-						<input name="buy" type="radio" value={0} />
-						<span>Earned</span>
-						<input name="buy" type="radio" value={1} />
-						<span>Spend</span>
+					<div className="input_box">
+						<div className="input_row">
+							<div className="radio">
+								<input name="buy" type="radio" value={0} />
+								<span>Earned</span>
+							</div>
+							<div className="radio">
+								<input name="buy" type="radio" value={1} />
+								<span>Spend</span>
+							</div>
+						</div>
 					</div>
 					<div>
 						<p>Memo</p>
-						<div contentEditable={true}>
-
-						</div>
+						<div className="input_memo" contentEditable={true}></div>
 					</div>
 					<button>Create</button>
 				</form>
