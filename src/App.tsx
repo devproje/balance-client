@@ -1,6 +1,6 @@
-import { Login } from "./components/Login";
+import { Login } from "./action/Login";
 import { useEffect, useState } from "react";
-import { Dashboard } from "./components/Dashboard";
+import { Dashboard } from "./action/Dashboard";
 import "./App.scss";
 
 function App() {
