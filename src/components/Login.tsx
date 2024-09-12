@@ -1,7 +1,7 @@
-export function Login({ setUrl }: { setUrl: React.Dispatch<React.SetStateAction<string>> }) {
+export function Login() {
 	return (
-		<div className="container">
-			<form onSubmit={ev => {
+		<main className="center">
+			<form className="login_form" onSubmit={ev => {
 				ev.preventDefault();
 				const URL = ev.currentTarget.url.value;
 				const username = ev.currentTarget.username.value;
@@ -10,7 +10,8 @@ export function Login({ setUrl }: { setUrl: React.Dispatch<React.SetStateAction<
 				if (URL === null || username === null || password === null) {
 					return;
 				}
-
+				
+				localStorage.setItem("url", URL);
 				fetch(`${URL}/auth/login`, {
 					method: "POST",
 					mode: "cors",
@@ -29,17 +30,23 @@ export function Login({ setUrl }: { setUrl: React.Dispatch<React.SetStateAction<
 
 					return res.json();
 				}).then(json => {
-					setUrl(URL.current?.valueOf()!);
 					localStorage.setItem("token", json.token);
 					window.location.reload();
 				});
 			}}>
-				<input name="url" type="text" placeholder="Server URL" />
-				<input name="username" type="text" placeholder="Username" />
-				<input name="password" type="password" placeholder="Password" />
+				<h1 className="login_logo">Balance Client</h1>
+
+				<div className="login_input_area">
+					<input name="url" type="url" placeholder="Server URL" required />
+					<input name="username" type="text" placeholder="Username" minLength={4} required />
+					<input name="password" type="password" placeholder="Password" minLength={8} required />
+				</div>
 				
-				<button>Login</button>
+				<div className="login_action_row">
+					<button>Login</button>
+					<a>You cannot login?</a>
+				</div>
 			</form>
-		</div>
+		</main>
 	);
 }
