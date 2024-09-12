@@ -17,13 +17,20 @@ function Item({ d, key }: { d: any, key: number }) {
 	}
 
 	return (
-		<div key={key}>
-			<p>id: {d.id}</p>
-			<p>name: {d.name}</p>
-			<p>price: {d.buy ? "-" : "+"}{d.price}</p>
-			<p>time: {time(date.getHours())}:{time(date.getMinutes())}</p>
-			<p>=====================</p>
-		</div>
+		<tr key={key}>
+			<td>
+				<b>{d.name}</b>
+			</td>
+			<td>
+				<p>{date.getMonth() + 1}/{date.getDay()} {time(date.getHours())}:{time(date.getMinutes())}</p>
+			</td>
+			<td>
+				<p>{d.buy ? "-" : "+"}{d.price}</p>
+			</td>
+			<td>
+				<p>{d.memo}</p>
+			</td>
+		</tr>
 	);
 }
 
@@ -59,7 +66,15 @@ export function Dashboard({ url, token }: { url: string | null, token: string | 
 				ev.preventDefault();
 				logout();
 			}}>Logout</button>
-			{data.map((d: any, n) => <Item d={d} key={n}/>)}
+			<table className="balset">
+				<tr>
+					<td>Name</td>
+					<td>Date</td>
+					<td>Price</td>
+					<td>Memo</td>
+				</tr>
+				{data.map((d: any, n) => <Item d={d} key={n}/>)}
+			</table>
 		</main>
 	);
 }
