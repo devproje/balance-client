@@ -22,16 +22,29 @@ function Item({ d, key }: { d: any, key: number }) {
 				<b>{d.name}</b>
 			</td>
 			<td>
-				<p>{date.getMonth() + 1}/{date.getDay()} {time(date.getHours())}:{time(date.getMinutes())}</p>
+				<p>{date.getMonth() + 1}/{date.getDay()}/{date.getFullYear()} {time(date.getHours())}:{time(date.getMinutes())}</p>
 			</td>
+			<Earned buy={d.buy} />
 			<td>
-				<p>{d.buy ? "-" : "+"}{d.price}</p>
+				<p>{d.price}</p>
 			</td>
 			<td>
 				<p>{d.memo}</p>
 			</td>
 		</tr>
 	);
+}
+
+function Earned({ buy }: { buy: boolean }) {
+	const earned = (
+		<td className="buy_earned">Earned</td>
+	);
+
+	const spend = (
+		<td className="buy_spend">Spend</td>
+	);
+	
+	return buy ? spend : earned;
 }
 
 export function Dashboard({ url, token }: { url: string | null, token: string | null }) {
@@ -62,19 +75,49 @@ export function Dashboard({ url, token }: { url: string | null, token: string | 
 	
 	return (
 		<main className="">
-			<button onClick={ev => {
-				ev.preventDefault();
-				logout();
-			}}>Logout</button>
-			<table className="balset">
-				<tr>
-					<td>Name</td>
-					<td>Date</td>
-					<td>Price</td>
-					<td>Memo</td>
-				</tr>
-				{data.map((d: any, n) => <Item d={d} key={n}/>)}
-			</table>
+			<div className="view">
+				<button onClick={ev => {
+					ev.preventDefault();
+					logout();
+				}}>Logout</button>
+				<form>
+					<div>
+						<span>Name</span>
+						<input name="name" type="text" required />
+					</div>
+					<div>
+						<span>Date</span>
+						<input name="date" type="date" />
+					</div>
+					<div>
+						<span>Price</span>
+						<input name="price" type="number" />
+					</div>
+					<div>
+						<input name="buy" type="radio" value={0} />
+						<span>Earned</span>
+						<input name="buy" type="radio" value={1} />
+						<span>Spend</span>
+					</div>
+					<div>
+						<p>Memo</p>
+						<div contentEditable={true}>
+
+						</div>
+					</div>
+					<button>Create</button>
+				</form>
+				<table border={0} className="balset">
+					<tr>
+						<td>Name</td>
+						<td>Date</td>
+						<td>Type</td>
+						<td>Price</td>
+						<td>Memo</td>
+					</tr>
+					{data.map((d: any, n) => <Item d={d} key={n}/>)}
+				</table>
+			</div>
 		</main>
 	);
 }

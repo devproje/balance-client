@@ -1,3 +1,23 @@
+.view {
+	margin: 15px;
+	max-width: 800px;
+}
+
 .balset {
-	width: 300px;
+	width: 100%;
+	margin: 30px 0;
+	border-collapse: collapse;
+	border: 1px solid var(--foreground);
+
+	tr, td {
+		border: 1px solid var(--foreground);
+	}
+}
+
+.buy_earned {
+	background-color: #238623;
+}
+
+.buy_spend {
+	background-color: #aa2828;
 }
