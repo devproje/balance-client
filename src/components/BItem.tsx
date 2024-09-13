@@ -1,5 +1,14 @@
-export function BItem({ d, key }: { d: any, key: number }) {
-	const date = new Date(d.date);
+import { MemoViewer } from "./MemoViewer";
+
+export function BItem({ d, n, memo, setMemo, cur, setCur }: {
+	d: any,
+	n: number,
+	memo: boolean,
+	setMemo: React.Dispatch<React.SetStateAction<boolean>>,
+	cur: number,
+	setCur: React.Dispatch<React.SetStateAction<number>>
+}) {
+	const date = new Date(d.date * 1000);
 	function time(n: number) {
 		if (n < 10) {
 			return `0${n}`;
@@ -8,11 +17,11 @@ export function BItem({ d, key }: { d: any, key: number }) {
 		return n;
 	}
 
-	let dateStr = `${date.getFullYear()}-${time(date.getMonth() + 1)}-${time(date.getDay())} ${dayParser(date.getDay())} `;
+	let dateStr = `${date.getFullYear()}-${time(date.getMonth() + 1)}-${time(date.getDate())} ${dayParser(date.getDay())} `;
 	dateStr += `${time(date.getHours())}:${time(date.getMinutes())}`;
 
 	return (
-		<a className="bal_item" key={key}>
+		<a className="bal_item" key={n}>
 			<div>
 				<b>{d.name}</b>
 				<p>{dateStr}</p>
@@ -25,7 +34,15 @@ export function BItem({ d, key }: { d: any, key: number }) {
 				</div>
 
 				<div>
-					<button>Memo</button>
+					<button onClick={ev => {
+						ev.preventDefault();
+						if (memo) {
+							return;
+						}
+
+						setMemo(true);
+						setCur(n);
+					}}>Memo</button>
 				</div>
 			</div>
 		</a>

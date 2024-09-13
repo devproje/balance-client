@@ -1,8 +1,9 @@
-export function MemoViewer() {
+export function MemoViewer(data: any) {
+	console.log(data.data.name);
 	return (
 		<div className="memo_viewer">
 			<div className="mv_title">
-				{/* TODO: create name title and close btn */}
+				<span>{data.data.name}</span>
 			</div>
 
 			{/* TODO: create content and action row here */}
