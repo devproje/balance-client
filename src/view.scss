@@ -11,14 +11,17 @@
 
 	h3 {
 		transform: translateY(15%);
-		padding: 0 10px;
 	}
+	
+}
 
-	.action_row {
-		width: 350px;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
+.action_row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	.icon {
+		padding: 0 10px;
 	}
 }
 
@@ -78,7 +81,7 @@
 	border: 1px solid var(--foreground);
 
 	input[type=text], input[type=number] {
-		width: 90px;
+		width: 140px;
 	}
 	
 	input[type=text], input[type=datetime-local], input[type=number] {

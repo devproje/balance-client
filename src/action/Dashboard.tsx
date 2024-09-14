@@ -62,7 +62,7 @@ export function Dashboard({ url, token }: { url: string | null, token: string | 
 					<h3 onClick={ev => {
 						ev.preventDefault();
 						window.location.reload();
-					}} className="refresh">
+					}} className="icon">
 						<i className="bi-arrow-clockwise" />
 					</h3>
 
