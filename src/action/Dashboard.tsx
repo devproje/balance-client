@@ -78,6 +78,7 @@ export function Dashboard({ url, token }: { url: string | null, token: string | 
 					return <BItem
 						d={d}
 						n={n}
+						url={url!}
 						key={n}
 					/>
 				})}

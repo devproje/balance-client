@@ -124,6 +124,12 @@
 	border: 1px solid var(--foreground);
 }
 
+#b_input_memo_2 {
+	padding: 3px 5px;
+	border-radius: 7px;
+	border: 1px solid var(--foreground);
+}
+
 .memo_viewer {
 	position: fixed;
 	width: 550px;
