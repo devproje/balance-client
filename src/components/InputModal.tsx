@@ -2,19 +2,17 @@ export function InputModal({ url, token }: { url: string, token: string }) {
 	return (
 		<form className="input_modal" onSubmit={ev => {
 			ev.preventDefault();
-			const memoObj = document.getElementById("b_input_memo");
+			const memoObj = document.getElementById("b_input_memo")!;
 
 			let name = ev.currentTarget.bname.value;
 			const date = ev.currentTarget.date.value;
 			let price = ev.currentTarget.price.value;
 			const buy = ev.currentTarget.buy.value;
-			let memo = memoObj?.innerText;
-
-			console.log(buy);
+			let memo = memoObj.innerText;
 
 			// @ts-ignore
 			const unix = Math.floor(new Date(date) / 1000);
-			console.log(unix);
+
 			fetch(`${url}/balance`, {
 				"method": "POST",
 				"mode": "cors",
@@ -30,16 +28,15 @@ export function InputModal({ url, token }: { url: string, token: string }) {
 					"memo": memo
 				})
 			}).then(res => {
-				if (res.status !== 301) {
+				if (res.status !== 201) {
 					return;
 				}
-
-				console.log("data sent");
-			})
-
-			name = "";
-			price = 0;
-			memo = "";
+			});
+			
+			ev.currentTarget.bname.value = "";
+			ev.currentTarget.price.value = NaN;
+			ev.currentTarget.date.value = 0;
+			memoObj.innerText = "";
 		}}>
 			<div className="input_text_row">
 				<div>

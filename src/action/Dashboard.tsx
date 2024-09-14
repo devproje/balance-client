@@ -21,8 +21,6 @@ function ping(url: string) {
 
 export function Dashboard({ url, token }: { url: string | null, token: string | null }) {
 	const [data, setData] = useState([]);
-	const [memo, setMemo] = useState(false);
-	const [cur, setCur] = useState(0);
 	
 	useEffect(() => {
 		if (url === null || token === null) {
@@ -57,21 +55,22 @@ export function Dashboard({ url, token }: { url: string | null, token: string | 
 	
 	return (
 		<main className="">
-			<nav>test</nav>
-			<button onClick={ev => {
-				ev.preventDefault();
-				logout();
-			}}>Logout</button>
+			<nav className="navbar">
+				<h2>Balance Client</h2>	
+				<div className="action_row">
+					<h4>Logged in from {url}</h4>
+					<button onClick={ev => {
+						ev.preventDefault();
+						logout();
+					}}>Logout</button>
+				</div>
+			</nav>
 			<div className="bal_view">
 				<InputModal url={url!} token={token!} />
 				{data.map((d: any, n: number) => {
 					return <BItem
 						d={d}
 						n={n}
-						memo={memo}
-						setMemo={setMemo}
-						cur={cur}
-						setCur={setCur}
 						key={n}
 					/>
 				})}
