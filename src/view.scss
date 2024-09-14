@@ -56,19 +56,19 @@
 		flex-direction: column;
 	}
 	
-	.buy_earned {
-		color: #238623;
-	}
-	
-	.buy_spend {
-		color: #aa2828;
-	}
-	
 	&:hover {
 		text-decoration: none;
 		transition-duration: 300ms;
 		background-color: rgba(#aaaaaa, 0.15);
 	}
+}
+
+.buy_earned {
+	color: #238623;
+}
+
+.buy_spend {
+	color: #aa2828;
 }
 
 .input_modal {
@@ -116,11 +116,12 @@
 		}
 	}
 
-	#b_input_memo {
-		padding: 3px 5px;
-		border-radius: 7px;
-		border: 1px solid var(--foreground);
-	}
+}
+
+#b_input_memo {
+	padding: 3px 5px;
+	border-radius: 7px;
+	border: 1px solid var(--foreground);
 }
 
 .memo_viewer {
@@ -135,6 +136,10 @@
 	border-radius: 7px;
 	border: 1px solid var(--foreground);
 	background-color: var(--background);
+
+	input[type=text], input[type=datetime-local], input[type=number] {
+		height: 35px;
+	}
 
 	.mv_title {
 		width: 100%;
@@ -160,6 +165,13 @@
 		flex-direction: row;
 		justify-content: space-between;
 		padding: 2rem 1.5rem;
+	}
+
+	.row_1 {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 0.1rem 1.5rem;
 	}
 
 	.memo {

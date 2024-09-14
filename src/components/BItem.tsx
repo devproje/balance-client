@@ -18,9 +18,8 @@ export function BItem({ d, n }: { d: any, n: number }) {
 			</div>
 
 			<div className="bitem_action_row">
-				<div className="bitem_action">
-					₩{d.price}
-					<Earned buy={d.buy} />
+				<div className={`bitem_action ${d.buy ? "buy_spend" : "buy_earned"}`}>
+					<span>₩{d.price.toLocaleString()}</span>
 				</div>
 
 				<div>
@@ -33,16 +32,4 @@ export function BItem({ d, n }: { d: any, n: number }) {
 			{render}
 		</a>
 	);
-}
-
-export function Earned({ buy }: { buy: boolean }) {
-	const earned = (
-		<span className="buy_earned">Earned</span>
-	);
-
-	const spend = (
-		<span className="buy_spend">Spend</span>
-	);
-	
-	return buy ? spend : earned;
 }
