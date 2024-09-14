@@ -1,15 +1,21 @@
 .navbar {
 	display: flex;
-	padding: 15px;
+	padding: 0.2rem 15px;
 	align-items: center;
 	justify-content: space-between;
+
 
 	h2, h4 {
 		transform: translateY(10%);
 	}
 
+	h3 {
+		transform: translateY(15%);
+		padding: 0 10px;
+	}
+
 	.action_row {
-		width: 300px;
+		width: 350px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;

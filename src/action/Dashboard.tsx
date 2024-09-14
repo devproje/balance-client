@@ -59,6 +59,13 @@ export function Dashboard({ url, token }: { url: string | null, token: string | 
 				<h2>Balance Client</h2>	
 				<div className="action_row">
 					<h4>Logged in from {url}</h4>
+					<h3 onClick={ev => {
+						ev.preventDefault();
+						window.location.reload();
+					}} className="refresh">
+						<i className="bi-arrow-clockwise" />
+					</h3>
+
 					<button onClick={ev => {
 						ev.preventDefault();
 						logout();
