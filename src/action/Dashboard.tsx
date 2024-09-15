@@ -79,6 +79,7 @@ export function Dashboard({ url, token }: { url: string | null, token: string | 
 						d={d}
 						n={n}
 						url={url!}
+						token={token!}
 						key={n}
 					/>
 				})}

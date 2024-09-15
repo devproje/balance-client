@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { time, dayParser } from "../util/format";
 
-export function MemoViewer({ url, data, setOpen }: { url: string, data: any, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
+export function MemoViewer({ url, data, token, setOpen }: { url: string, token: string, data: any, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
 	const [edit, setEdit] = useState(false);
 	if (edit) {
 		return (
@@ -17,9 +17,13 @@ export function MemoViewer({ url, data, setOpen }: { url: string, data: any, set
 				const buy = ev.currentTarget.buy.value;
 				const memo = memoObj.innerText;
 
+				console.log(`${url}/balance/${data.id}`);
 				fetch(`${url}/balance/${data.id}`, {
 					"mode": "cors",
 					"method": "PUTS",
+					"headers": {
+						"Authorization": token
+					},
 					"body": JSON.stringify({
 						"name": name,
 						"date": date,
@@ -27,7 +31,16 @@ export function MemoViewer({ url, data, setOpen }: { url: string, data: any, set
 						"buy": buy,
 						"memo": memo
 					})
-				})
+				}).then(res => {
+					if (res.status !== 200) {
+						console.warn("error!");
+						return;
+					}
+
+					setOpen(false);
+				}).catch(err => {
+					console.error("ERROR!", err);
+				});
 			}}>
 				<View data={data} edit={edit} setOpen={setOpen} setEdit={setEdit} />
 			</form>
