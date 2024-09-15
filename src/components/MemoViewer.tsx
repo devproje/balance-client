@@ -1,15 +1,17 @@
+import { dateTime } from "../util/time";
+import { time, dayParser, hour12 } from "../util/format";
 import { Dispatch, SetStateAction, useState } from "react";
-import { time, dayParser } from "../util/format";
 
 export function MemoViewer({ url, data, token, setOpen }: { url: string, token: string, data: any, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
 	const [edit, setEdit] = useState(false);
+	
 	if (edit) {
 		return (
 			<form className="memo_viewer" onSubmit={ev => {
 				ev.preventDefault();
-
-				const name = ev.currentTarget.dname.value;
+				
 				const memoObj = document.getElementById("b_input_memo_2")!;
+				const name = ev.currentTarget.dname.value;
 
 				// @ts-ignore
 				const date = Math.floor(new Date(ev.currentTarget.date.value) / 1000);
@@ -17,12 +19,12 @@ export function MemoViewer({ url, data, token, setOpen }: { url: string, token: 
 				const buy = ev.currentTarget.buy.value;
 				const memo = memoObj.innerText;
 
-				console.log(`${url}/balance/${data.id}`);
 				fetch(`${url}/balance/${data.id}`, {
+					"method": "PUT",
 					"mode": "cors",
-					"method": "PUTS",
 					"headers": {
-						"Authorization": token
+						"Authorization": token,
+						"Content-Type": "application/json"
 					},
 					"body": JSON.stringify({
 						"name": name,
@@ -32,6 +34,7 @@ export function MemoViewer({ url, data, token, setOpen }: { url: string, token: 
 						"memo": memo
 					})
 				}).then(res => {
+					console.log(res.status);
 					if (res.status !== 200) {
 						console.warn("error!");
 						return;
@@ -63,16 +66,20 @@ function repl(edit: boolean, general: JSX.Element, replace: JSX.Element) {
 }
 
 function View({ data, edit, setOpen, setEdit }: { data: any, edit: boolean, setOpen: Dispatch<SetStateAction<boolean>>, setEdit: Dispatch<SetStateAction<boolean>> }) {
+	const [init, setInit] = useState(false);
 	const date = new Date(data.date * 1000);
 
-	const hour12 = () => {
-		const raw = date.getHours();
-		if (raw > 12) {
-			return raw - 12;
+	if (edit) {
+		if (!init) {
+			setInit(true);
+
+			setTimeout(() => {
+				const memoObj = document.getElementById("b_input_memo_2")!;
+				memoObj.innerText = data.memo;
+			}, 50);
 		}
 
-		return raw;
-	};
+	}
 	
 	return (
 		<>
@@ -120,13 +127,13 @@ function View({ data, edit, setOpen, setEdit }: { data: any, edit: boolean, setO
 						<div className="obj">
 							<h3>Time</h3>
 							<span>
-								{time(hour12())}:{time(date.getMinutes())} {date.getHours() >= 12 ? "PM" : "AM"}
+								{time(hour12(date))}:{time(date.getMinutes())} {date.getHours() >= 12 ? "PM" : "AM"}
 							</span>
 						</div>
 					</>,
 					<div className="obj">
 						<h3>Datetime</h3>
-						<input name="date" type="datetime-local" required />
+						<input name="date" type="datetime-local" defaultValue={dateTime()} required />
 					</div>
 				)}
 
@@ -161,7 +168,7 @@ function View({ data, edit, setOpen, setEdit }: { data: any, edit: boolean, setO
 
 			<div className="title obj memo">
 				<h3>Memo</h3>
-				{repl(edit, <pre>{data.memo}</pre>, <div id="b_input_memo_2" contentEditable>{data.memo}</div>)}
+				{repl(edit, <span>{data.memo}</span>, <div id="b_input_memo_2" contentEditable></div>)}
 			</div>
 
 			{!edit ? <></> : <button type="submit">Submit</button>}

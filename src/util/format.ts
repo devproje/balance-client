@@ -34,3 +34,12 @@ export function time(n: number) {
 
 	return n;
 }
+
+export function hour12(date: Date) {
+	const raw = date.getHours();
+	if (raw > 12) {
+		return raw - 12;
+	}
+
+	return raw;
+};

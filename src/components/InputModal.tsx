@@ -1,3 +1,5 @@
+import { dateTime } from "../util/time";
+
 export function InputModal({ url, token }: { url: string, token: string }) {
 	return (
 		<form className="input_modal" onSubmit={ev => {
@@ -45,7 +47,7 @@ export function InputModal({ url, token }: { url: string, token: string }) {
 				</div>
 				<div>
 					<p>Date</p>
-					<input name="date" type="datetime-local" required />
+					<input name="date" type="datetime-local" defaultValue={dateTime()} required />
 				</div>
 				<div>
 					<p>Price</p>
