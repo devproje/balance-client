@@ -4,6 +4,16 @@ import { Dispatch, SetStateAction, useState } from "react";
 
 export function MemoViewer({ url, data, token, setOpen }: { url: string, token: string, data: any, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
 	const [edit, setEdit] = useState(false);
+
+	const del = () => {
+		fetch(`${url}/balance/${data.id}`, {
+			"mode": "cors",
+			"method": "DELETE",
+			"headers": {
+				"Authorization": token
+			}
+		})
+	}
 	
 	if (edit) {
 		return (
@@ -34,7 +44,6 @@ export function MemoViewer({ url, data, token, setOpen }: { url: string, token: 
 						"memo": memo
 					})
 				}).then(res => {
-					console.log(res.status);
 					if (res.status !== 200) {
 						console.warn("error!");
 						return;
@@ -45,14 +54,14 @@ export function MemoViewer({ url, data, token, setOpen }: { url: string, token: 
 					console.error("ERROR!", err);
 				});
 			}}>
-				<View data={data} edit={edit} setOpen={setOpen} setEdit={setEdit} />
+				<View data={data} edit={edit} del={del} setOpen={setOpen} setEdit={setEdit} />
 			</form>
 		);
 	}
 
 	return (
 		<div className="memo_viewer">
-			<View data={data} edit={edit} setOpen={setOpen} setEdit={setEdit} />
+			<View data={data} edit={edit} del={del} setOpen={setOpen} setEdit={setEdit} />
 		</div>
 	);
 }
@@ -65,7 +74,13 @@ function repl(edit: boolean, general: JSX.Element, replace: JSX.Element) {
 	return replace;
 }
 
-function View({ data, edit, setOpen, setEdit }: { data: any, edit: boolean, setOpen: Dispatch<SetStateAction<boolean>>, setEdit: Dispatch<SetStateAction<boolean>> }) {
+function View({ data, edit, del, setOpen, setEdit }: {
+	data: any,
+	edit: boolean,
+	del: () => void,
+	setOpen: Dispatch<SetStateAction<boolean>>,
+	setEdit: Dispatch<SetStateAction<boolean>>
+}) {
 	const [init, setInit] = useState(false);
 	const date = new Date(data.date * 1000);
 
@@ -101,8 +116,20 @@ function View({ data, edit, setOpen, setEdit }: { data: any, edit: boolean, setO
 					<h3 onClick={ev => {
 						ev.preventDefault();
 						setEdit(!edit);
-					}}><i className={"bi bi-pen"} /></h3>,
-					<></>
+					}}><i className="bi bi-pen" /></h3>,
+					<div className="action_row">
+						{/* Discard Btn */}
+						<h2 onClick={ev => {
+							ev.preventDefault();
+							setEdit(!edit);
+						}}><i className="bi bi-x" /></h2>
+
+						{/* Delete Btn */}
+						<h3 onClick={ev => {
+							ev.preventDefault();
+							del();
+						}}><i className="bi bi-trash" /></h3>
+					</div>
 				)}
 			</div>
 			
