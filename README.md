@@ -1,7 +1,4 @@
-# Tauri + React + Typescript
+# Balance Client
+(Balance Application)[https://github.com/devproje/balance-application]의 클라이언트 입니다.
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
-
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+<b>현재 개발버전이라 불안정하니 참고해 주시기 바랍니다.</b>
