@@ -9,6 +9,6 @@ export function dateTime() {
 		0,
 		((localISOString.indexOf("T") | 0) + 6) | 0
 	);
-	console.log(datetimeInputString);
+
 	return datetimeInputString;
 }

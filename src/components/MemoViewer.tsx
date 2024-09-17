@@ -6,13 +6,20 @@ export function MemoViewer({ url, data, token, setOpen }: { url: string, token: 
 	const [edit, setEdit] = useState(false);
 
 	const del = () => {
+		console.log(url, data.id);
 		fetch(`${url}/balance/${data.id}`, {
 			"mode": "cors",
 			"method": "DELETE",
 			"headers": {
 				"Authorization": token
 			}
-		})
+		}).then((res) => {
+			if (res.status !== 200) {
+				return;
+			}
+
+			setOpen(false);
+		});
 	}
 	
 	if (edit) {
